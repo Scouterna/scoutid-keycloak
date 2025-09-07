@@ -19,11 +19,10 @@ for var in $(env | grep "APPSETTING_KC_"); do
     # Export the new variable with the old value
     export "$new_var_name"="$var_value"
 
-    # Unset the old variable
-    unset "$var_name"
+    echo "Set $new_var_name to value of $var_name"
   fi
 done
 
 # Run the 'exec' command as the last step of the script.
 # As it replaces the current shell process, no additional shell commands will run after the 'exec' command.
-exec /opt/keycloak/bin/kc.sh start "$@"
+exec /opt/keycloak/bin/kc.sh "$@"
