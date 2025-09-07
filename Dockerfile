@@ -46,6 +46,8 @@ ENV KC_DB=postgres
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG}
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
+COPY entrypoint.sh /opt/keycloak/custom_entrypoint.sh
+
 EXPOSE 8080
 
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+ENTRYPOINT ["/opt/keycloak/custom_entrypoint.sh"]
