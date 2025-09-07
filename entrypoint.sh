@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo Custom entrypoint start
+
 # Replace APPSETTING_KC_ prefix from Azure App Service environment variables
 # with KC_ prefix for Keycloak configuration.
 for var in $(env | grep "APPSETTING_KC_"); do
