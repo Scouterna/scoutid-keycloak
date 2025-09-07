@@ -3,7 +3,6 @@
 # You should update all versions to the latest stable versions before building
 ARG KEYCLOAK_TAG=26.2.4-0
 ARG AZURE_IDP_VERSION=1.2.4
-ARG MAVEN_DEPENDENCY_PLUGIN_VERSION=3.8.1
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
@@ -11,9 +10,6 @@ ARG MAVEN_DEPENDENCY_PLUGIN_VERSION=3.8.1
 
 
 FROM maven:latest AS maven
-
-# Preload plugin and dependencies (for Docker cache)
-RUN mvn dependency:get -Dartifact=org.apache.maven.plugins:maven-dependency-plugin:${MAVEN_DEPENDENCY_PLUGIN_VERSION}
 
 # Obtain the Azure Identity Providers JDBC PostgreSQL library
 RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION}
