@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 
 # You should update all versions to the latest stable versions before building
-ARG KEYCLOAK_TAG=26.2.4-0
-ARG AZURE_IDP_VERSION=1.2.4
+ARG KEYCLOAK_TAG="26.2.4-0"
+ARG AZURE_IDP_VERSION="1.2.4"
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
@@ -10,6 +10,7 @@ ARG AZURE_IDP_VERSION=1.2.4
 
 
 FROM maven:latest AS maven
+ARG AZURE_IDP_VERSION
 
 # Obtain the Azure Identity Providers JDBC PostgreSQL library
 RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION}
