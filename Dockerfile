@@ -1,7 +1,29 @@
-ARG KEYCLOAK_TAG=26.2.4-0
+# syntax=docker/dockerfile:1
 
-# The rest of this file is based on the following article:
-# https://www.keycloak.org/server/containers#_writing_your_optimized_keycloak_containerfile
+# You should update all versions to the latest stable versions before building
+ARG KEYCLOAK_TAG=26.2.4-0
+ARG AZURE_IDP_VERSION=1.2.4
+ARG MAVEN_DEPENDENCY_PLUGIN_VERSION=3.8.1
+
+# The rest of this file is based on multiple sources:
+# - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
+# - https://www.keycloak.org/server/containers#_writing_your_optimized_keycloak_containerfile
+
+
+FROM maven:latest AS maven
+
+# Preload plugin and dependencies (for Docker cache)
+RUN mvn dependency:get -Dartifact=org.apache.maven.plugins:maven-dependency-plugin:${MAVEN_DEPENDENCY_PLUGIN_VERSION}
+
+# Obtain the Azure Identity Providers JDBC PostgreSQL library
+RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION}
+
+# Now also get the IDP's dependencies
+WORKDIR /root/.m2/repository/com/azure/azure-identity-extensions/${AZURE_IDP_VERSION}
+RUN cp azure-identity-extensions-${AZURE_IDP_VERSION}.pom pom.xml
+RUN mvn dependency:copy -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION} -DoutputDirectory=/jar
+RUN mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/jar
+
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 
@@ -10,6 +32,9 @@ ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 
 WORKDIR /opt/keycloak
+
+# Copy the Azure Identity Provider
+COPY --from=maven --chown=keycloak:keycloak --chmod=644 /jar/*.jar providers/
 
 # Add custom provider JAR file to the providers directory
 # ADD --chown=keycloak:keycloak --chmod=644 <MY_PROVIDER_JAR_URL> /opt/keycloak/providers/myprovider.jar
@@ -20,7 +45,10 @@ RUN /opt/keycloak/bin/kc.sh build
 # Configure a database vendor
 ENV KC_DB=postgres
 
+
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG}
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
+
+EXPOSE 8080
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
