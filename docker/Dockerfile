@@ -27,6 +27,7 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
+ENV KC_DB=postgres
 
 WORKDIR /opt/keycloak
 
@@ -38,10 +39,6 @@ COPY --from=maven --chown=keycloak:keycloak --chmod=644 /jar/*.jar providers/
 
 # Build an optimized Keycloak image
 RUN /opt/keycloak/bin/kc.sh build
-
-# Configure a database vendor
-ENV KC_DB=postgres
-
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG}
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
