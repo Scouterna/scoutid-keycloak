@@ -1,0 +1,8 @@
+using './main.bicep'
+
+param keycloakBootstrapAdminUsername = 'admin'
+@secure()
+param keycloakBootstrapAdminPassword = ''
+param entraAdminPrincipalId = ''
+param entraAdminPrincipalName = ''
+param keycloakImageName = 'ghcr.io/scouterna/scoutid-keycloak:xxxxxxx'
