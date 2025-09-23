@@ -14,6 +14,12 @@ param entraAdminPrincipalName string
 @description('The name of the Keycloak Docker image to use. Probably a version of `ghcr.io/scouterna/scoutid-keycloak`.')
 param keycloakImageName string
 
+@description('The public domain name for the Keycloak instance.')
+param publicDomainName string
+
+@description('The admin domain name for the Keycloak instance.')
+param adminDomainName string
+
 var appServiceName = 'app-scoutid-prod-sec-${uniqueString(resourceGroup().id)}'
 
 module network './modules/network.bicep' = {
@@ -46,6 +52,8 @@ module frontdoor './modules/frontdoor.bicep' = {
   name: 'frontdoor-deployment'
   params: {
     appServiceHostname: app.outputs.appServiceHostname
+    publicDomainName: publicDomainName
+    adminDomainName: adminDomainName
   }
 }
 
@@ -65,5 +73,6 @@ module frontdoor './modules/frontdoor.bicep' = {
 //   ]
 // }
 
-output keycloakUrl string = 'https://${frontdoor.outputs.frontDoorEndpointHostName}'
-output postDeploymentInstruction string = 'IMPORTANT: You must now manually grant the App Service Managed Identity (${app.outputs.appServicePrincipalId}) permissions in the PostgreSQL database.'
+output publicUrl string = 'https://${publicDomainName}'
+output adminUrl string = 'https://${adminDomainName}/admin'
+output postDeploymentInstruction string = 'IMPORTANT: You must now manually grant the App Service Managed Identity (${app.outputs.appServicePrincipalId}) permissions in the PostgreSQL database and configure the domains in the Front Door.'
