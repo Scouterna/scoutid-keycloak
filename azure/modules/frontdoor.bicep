@@ -51,32 +51,6 @@ resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2025-06-01' = {
   }
 }
 
-// --- 4. Simple Route - Forward All Traffic to App Service ---
-resource defaultRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2025-06-01' = {
-  parent: frontDoorEndpoint
-  name: 'cdnr-scoutid-prod-sec-${uniqueString(resourceGroup().id)}'
-  properties: {
-    // Simple route that forwards all traffic to the app service
-    supportedProtocols: [
-      'Http'
-      'Https'
-    ]
-    patternsToMatch: [
-      '/realms/*'
-      '/resources/*'
-    ]
-    originGroup: {
-      id: originGroup.id
-    }
-    forwardingProtocol: 'MatchRequest'
-    linkToDefaultDomain: 'Enabled'
-    httpsRedirect: 'Enabled'
-  }
-  dependsOn: [
-    origin
-  ]
-}
-
 // Custom domain configuration
 resource customDomain 'Microsoft.Cdn/profiles/customDomains@2025-06-01' = {
   parent: frontDoorProfile
@@ -142,7 +116,7 @@ resource adminCustomDomainAssociation 'Microsoft.Cdn/profiles/afdEndpoints/route
       'Https'
     ]
     patternsToMatch: [
-      '/admin/*'
+      '/*'
     ]
     originGroup: {
       id: originGroup.id

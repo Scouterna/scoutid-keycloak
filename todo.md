@@ -1,0 +1,9 @@
+- Add domain to frontdoor config
+- Add public endpoint rule to app (only our frontdoor (or maybe any frontdoor))
+- Enable strict hostname checking
+- Rename Front Door from `cdnp` to `afd` (and other similar)
+- Add documentation on the custom domain configuration
+  - This basically just entails adding the correct records to the zone.
+- Remove defaultRoute from frontdoor since it duplicates the public route
+- Clean up front door naming
+- Protect admin routes with IP filtering
