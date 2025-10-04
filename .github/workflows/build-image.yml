@@ -21,7 +21,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: https://ghcr.io
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -43,5 +43,5 @@ jobs:
             org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
             org.opencontainers.image.revision=${{ steps.vars.outputs.sha_long }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
-            org.opencontainers.image.description=Keycloak Image customie
+            org.opencontainers.image.description=Optimized Keycloak image for ScoutID
             org.opencontainers.image.licenses=Apache-2.0
