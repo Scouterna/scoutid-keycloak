@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 
 # You should update all versions to the latest stable versions before building
-ARG KEYCLOAK_TAG="26.2.4-0"
-ARG AZURE_IDP_VERSION="1.2.4"
+ARG KEYCLOAK_TAG="26.4.0-0"
+ARG AZURE_IDP_VERSION="1.2.5"
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
