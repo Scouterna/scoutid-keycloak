@@ -21,14 +21,14 @@ for var in $(env | grep "APPSETTING_KC_"); do
   fi
 done
 
-# Fetch an access token for Azure Database for PostgreSQL from the Azure
-# Instance Metadata Service. The JDBC driver will use this token as the password
-RESOURCE_URI="https://ossrdbms-aad.database.windows.net"
-TOKEN_AUTH_URI="${IDENTITY_ENDPOINT}?resource=${RESOURCE_URI}&api-version=2019-08-01"
+# # Fetch an access token for Azure Database for PostgreSQL from the Azure
+# # Instance Metadata Service. The JDBC driver will use this token as the password
+# RESOURCE_URI="https://ossrdbms-aad.database.windows.net"
+# TOKEN_AUTH_URI="${IDENTITY_ENDPOINT}?resource=${RESOURCE_URI}&api-version=2019-08-01"
 
-export KC_DB_PASSWORD=$(curl -s -X GET \
-  -H "X-IDENTITY-HEADER: $IDENTITY_HEADER" \
-  "$TOKEN_AUTH_URI" | jq -r '.access_token')
+# export KC_DB_PASSWORD=$(curl -s -X GET \
+#   -H "X-IDENTITY-HEADER: $IDENTITY_HEADER" \
+#   "$TOKEN_AUTH_URI" | jq -r '.access_token')
 
 # Run the 'exec' command as the last step of the script.
 # As it replaces the current shell process, no additional shell commands will run after the 'exec' command.

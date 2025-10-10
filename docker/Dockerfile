@@ -2,7 +2,7 @@
 
 # You should update all versions to the latest stable versions before building
 ARG KEYCLOAK_TAG="26.4.0-0"
-ARG AZURE_IDP_VERSION="1.2.5"
+ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
 ARG SCOUTNET_PROVIDER_VERSION="0.1.2"
 
 # The rest of this file is based on multiple sources:
@@ -16,16 +16,16 @@ RUN dnf install --installroot /mnt/rootfs curl jq --releasever 9 --setopt instal
 
 
 FROM maven:latest AS maven
-ARG AZURE_IDP_VERSION
+ARG AZURE_IDENTITY_EXTENSIONS_VERSION
 ARG SCOUTNET_PROVIDER_VERSION
 
 # Obtain the Azure Identity Providers JDBC PostgreSQL library
-RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION}
+RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDENTITY_EXTENSIONS_VERSION}
 
 # Now also get the IDP's dependencies
-WORKDIR /root/.m2/repository/com/azure/azure-identity-extensions/${AZURE_IDP_VERSION}
-RUN cp azure-identity-extensions-${AZURE_IDP_VERSION}.pom pom.xml
-RUN mvn dependency:copy -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDP_VERSION} -DoutputDirectory=/jar
+WORKDIR /root/.m2/repository/com/azure/azure-identity-extensions/${AZURE_IDENTITY_EXTENSIONS_VERSION}
+RUN cp azure-identity-extensions-${AZURE_IDENTITY_EXTENSIONS_VERSION}.pom pom.xml
+RUN mvn dependency:copy -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDENTITY_EXTENSIONS_VERSION} -DoutputDirectory=/jar
 RUN mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/jar
 
 RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-provider/releases/download/v${SCOUTNET_PROVIDER_VERSION}/keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar
