@@ -28,6 +28,7 @@ RUN cp azure-identity-extensions-${AZURE_IDENTITY_EXTENSIONS_VERSION}.pom pom.xm
 RUN mvn dependency:copy -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDENTITY_EXTENSIONS_VERSION} -DoutputDirectory=/jar
 RUN mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/jar
 
+# Download the Scoutnet Authenticator JAR
 RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-provider/releases/download/v${SCOUTNET_PROVIDER_VERSION}/keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder

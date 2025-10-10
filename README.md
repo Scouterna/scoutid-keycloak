@@ -12,3 +12,14 @@
 
 This repository contains the sources to build the optimized version of Keycloak
 that ScoutID runs.
+
+Features:
+- The [Azure Identity library](https://learn.microsoft.com/en-us/java/api/overview/azure/identity-readme?view=azure-java-stable) is installed.
+- A custom Keycloak authenticator that authenticates towards Scoutnet is installed.
+- Environment variables starting with `APPSETTING_KC_` are automatically trimmed to `KC_` to allow configuring environment variables through App Service.
+
+## Building
+
+The Docker image is built on every push to any branch. Images are tagged with
+the commit hash in the format `sha-<hash>`, and pushes to the `main` branch will
+additionally be tagged with the `latest` tag.
