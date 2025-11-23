@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # You should update all versions to the latest stable versions before building
-ARG KEYCLOAK_TAG="26.4.0-0"
+ARG KEYCLOAK_TAG="26.4.5-0"
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
 ARG SCOUTNET_PROVIDER_VERSION="0.3.0"
 
