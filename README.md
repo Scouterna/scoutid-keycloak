@@ -8,6 +8,7 @@
 > This repo is part of a family:
 > - [scoutid-keycloak](https://github.com/Scouterna/scoutid-keycloak) (this repo)
 > - [scoutid-keycloak-provider](https://github.com/Scouterna/scoutid-keycloak-provider)
+> - [scoutid-keycloak-theme](https://github.com/Scouterna/scoutid-keycloak-theme)
 > - [scoutid-keycloak-infra](https://github.com/Scouterna/scoutid-keycloak-infra) (private)
 
 This repository contains the sources to build the optimized version of Keycloak
