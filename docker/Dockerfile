@@ -4,6 +4,7 @@
 ARG KEYCLOAK_TAG="26.4.5-0"
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
 ARG SCOUTNET_PROVIDER_VERSION="0.4.0"
+ARG SCOUTID_THEME_VERSION="0.1.0"
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
@@ -30,6 +31,7 @@ RUN mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/j
 
 # Download the Scoutnet Authenticator JAR
 RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-provider/releases/download/v${SCOUTNET_PROVIDER_VERSION}/keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar
+RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-theme/releases/download/v${SCOUTID_THEME_VERSION}/keycloak-theme-for-kc-all-other-versions.jar
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 
