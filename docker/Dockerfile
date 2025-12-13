@@ -19,6 +19,7 @@ RUN dnf install --installroot /mnt/rootfs curl jq --releasever 9 --setopt instal
 FROM maven:latest AS maven
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION
 ARG SCOUTNET_PROVIDER_VERSION
+ARG SCOUTID_THEME_VERSION
 
 # Obtain the Azure Identity Providers JDBC PostgreSQL library
 RUN mvn dependency:get -Dartifact=com.azure:azure-identity-extensions:${AZURE_IDENTITY_EXTENSIONS_VERSION}
@@ -30,8 +31,10 @@ RUN mvn dependency:copy -Dartifact=com.azure:azure-identity-extensions:${AZURE_I
 RUN mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/jar
 
 # Download the Scoutnet Authenticator JAR
-RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-provider/releases/download/v${SCOUTNET_PROVIDER_VERSION}/keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar
-RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-theme/releases/download/v${SCOUTID_THEME_VERSION}/keycloak-theme-for-kc-all-other-versions.jar
+RUN cd /jar && curl -fsSL -o keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar https://github.com/Scouterna/scoutid-keycloak-provider/releases/download/v${SCOUTNET_PROVIDER_VERSION}/keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER_VERSION}.jar
+
+# Download theme JAR
+RUN cd /jar && curl -fsSL -o keycloak-theme-for-kc-all-other-versions.jar https://github.com/Scouterna/scoutid-keycloak-theme/releases/download/v${SCOUTID_THEME_VERSION}/keycloak-theme-for-kc-all-other-versions.jar
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 
