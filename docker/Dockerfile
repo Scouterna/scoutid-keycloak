@@ -36,6 +36,9 @@ RUN cd /jar && curl -fsSL -o keycloak-scoutnet-authenticator-${SCOUTNET_PROVIDER
 # Download theme JAR
 RUN cd /jar && curl -fsSL -o keycloak-theme-for-kc-all-other-versions.jar https://github.com/Scouterna/scoutid-keycloak-theme/releases/download/v${SCOUTID_THEME_VERSION}/keycloak-theme-for-kc-all-other-versions.jar
 
+# Download the ScoutID Theme JAR
+RUN cd /jar && curl -LO https://github.com/Scouterna/scoutid-keycloak-theme/releases/download/v${SCOUTID_THEME_VERSION}/keycloak-theme-for-kc-all-other-versions.jar
+
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 
 # Enable health and metrics support
