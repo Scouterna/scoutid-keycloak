@@ -4,7 +4,7 @@
 ARG KEYCLOAK_TAG="26.4.7-0"
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
 ARG SCOUTNET_PROVIDER_VERSION="0.6.0"
-ARG SCOUTID_THEME_VERSION="0.2.0"
+ARG SCOUTID_THEME_VERSION="0.2.1"
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
