@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
 
 # You should update all versions to the latest stable versions before building
-ARG KEYCLOAK_TAG="26.4.7-0"
+ARG KEYCLOAK_TAG="26.5.1"
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
-ARG SCOUTNET_PROVIDER_VERSION="0.8.0"
+ARG SCOUTNET_PROVIDER_VERSION="0.9.0"
 ARG SCOUTID_THEME_VERSION="0.2.1"
 
 # The rest of this file is based on multiple sources:
