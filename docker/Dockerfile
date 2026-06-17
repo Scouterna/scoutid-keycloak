@@ -41,6 +41,8 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_TAG} AS builder
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
+ENV KC_FEATURES=user-event-metrics
+ENV KC_EVENT_METRICS_USER_ENABLED=true
 ENV KC_DB=postgres
 
 WORKDIR /opt/keycloak
