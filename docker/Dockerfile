@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 
 # You should update all versions to the latest stable versions before building
-ARG KEYCLOAK_TAG="26.5.6"
+ARG KEYCLOAK_TAG="26.8.0"
 ARG AZURE_IDENTITY_EXTENSIONS_VERSION="1.2.5"
-ARG SCOUTNET_PROVIDER_VERSION="0.14.0"
-ARG SCOUTID_THEME_VERSION="0.4.2"
+ARG SCOUTNET_PROVIDER_VERSION="1.0.1"
+ARG SCOUTID_THEME_VERSION="1.0.0"
 
 # The rest of this file is based on multiple sources:
 # - https://github.com/keycloak/keycloak/discussions/26267#discussioncomment-10824627
